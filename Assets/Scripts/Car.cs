@@ -9,7 +9,8 @@ using Random = UnityEngine.Random;
 
 public class Car : MonoBehaviour
 {
-  [SerializeField]public float serializeSpeed = 5f;
+  [SerializeField] internal float serializeSpeed = 5f;
+  [SerializeField] private float inertionCoef = 2f;
   private float _targetSpeed;
   private float _t = 0f;
   private SplineFollower _splineFollower;
@@ -47,8 +48,7 @@ public class Car : MonoBehaviour
     {
       Debug.Log("SpeedUp" + gameObject.name);
       _targetSpeed = Mathf.Lerp(0f, serializeSpeed, _t);
-      _t += Time.deltaTime;
-      _t += Time.deltaTime;
+      _t += Time.deltaTime * inertionCoef;
     }
     else _t = 1f;
 
@@ -60,8 +60,7 @@ public class Car : MonoBehaviour
     {
       Debug.Log("SpeedDown" + gameObject.name);
       _targetSpeed = Mathf.Lerp(0f, serializeSpeed, _t);
-      _t -= Time.deltaTime;
-      _t -= Time.deltaTime;
+      _t -= Time.deltaTime * inertionCoef;
     }
     else _t = 0f;
 
